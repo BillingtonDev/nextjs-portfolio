@@ -17,6 +17,9 @@ export default function Page() {
       <div className="my-8">
         <BlogPosts />
       </div>
+    </section>
+    
+    <section>
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
         Schedule Your Peer Tutor Session!
       </h1>
@@ -29,6 +32,7 @@ export default function Page() {
       <div className="my-8">
         <a href="https://micahstutoring.setmore.com/">Book Now</a>
       </div>
+    
     </section>
   )
 }
