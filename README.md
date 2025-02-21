@@ -14,7 +14,7 @@ This is a porfolio site template complete with a blog. Includes:
 ###
 View here [https://nextjs-portfolio-rho-navy.vercel.app/](https://nextjs-portfolio-rho-navy.vercel.app/), domain coming soon.
 
-### One-Click Deploy
+### Source(s)
 
 Powered by [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=vercel-examples)
 
