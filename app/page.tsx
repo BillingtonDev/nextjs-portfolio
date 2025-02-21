@@ -17,6 +17,18 @@ export default function Page() {
       <div className="my-8">
         <BlogPosts />
       </div>
+      <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
+        Schedule Your Peer Tutor Session!
+      </h1>
+      <p className="mb-4">
+        {`If you are not meeting your current academic goals in computer science, mathematics, or statistics 
+        I would love to connect! As a certified tutor in Laurier’s Tutor Connection Program I give you tools 
+        to support your learning outside of the lecture hall, even if all you want is some dedicated time to 
+        study with a peer.`}
+      </p>
+      <div className="my-8">
+        <a href="https://micahstutoring.setmore.com/">Book Now</a>
+      </div>
     </section>
   )
 }
