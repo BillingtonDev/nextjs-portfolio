@@ -27,7 +27,7 @@ export default function Page() {
         study with a peer.`}
       </p>
       <div className="my-8">
-        <a href="https://micahstutoring.setmore.com/">Book Now</a>
+        <a href="https://micahstutoring.setmore.com/" target="_blank">Book Now</a>
       </div>
     
     </section>
