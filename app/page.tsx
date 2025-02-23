@@ -26,8 +26,15 @@ export default function Page() {
         to support your learning outside of the lecture hall, even if all you want is some dedicated time to 
         study with a peer.`}
       </p>
-      <div className="my-8">
-        <a href="https://micahstutoring.setmore.com/" target="_blank">Book Now</a>
+      <div className="my-8"> 
+        <a 
+          className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://micahstutoring.setmore.com/"
+        >
+        <ArrowIcon />
+        <p>Book Now</p></a>
       </div>
     
     </section>
