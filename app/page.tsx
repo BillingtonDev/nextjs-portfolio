@@ -33,8 +33,8 @@ export default function Page() {
           target="_blank"
           href="https://micahstutoring.setmore.com/"
         >
-        <ArrowIcon />
-        <p>Book Now</p></a>
+        <p>Book Now</p>
+        </a>
       </div>
     
     </section>
