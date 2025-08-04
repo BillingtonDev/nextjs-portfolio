@@ -1,3 +1,5 @@
+import ArrowIcon from 'app/components/footer'
+
 export default function Page() {
   return (
     <section>
@@ -11,35 +13,57 @@ export default function Page() {
         <h2 className="mb-2 text-xl font-semibold tracking-tighter">
             This Website
         </h2 >
-        <a 
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/BillingtonDev/nextjs-portfolio">nextjs-portfolio</a>
+        <li>
+            <a 
+                className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://github.com/BillingtonDev/nextjs-portfolio">
+                <ArrowIcon />
+                <p>nextjs-portfolio</p>
+            </a>
+        </li>
+        
         <h2 className="mb-2 text-xl font-semibold tracking-tighter">
             Exploring Image Modeling for Melanoma Detection
         </h2>
-        <a 
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/BillingtonDev/AIProject">AIProject</a>
+        <li>
+            <a 
+                className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://github.com/BillingtonDev/AIProject">
+                    <ArrowIcon />
+                    <p>AIProject</p>
+            </a>
+        </li>
+
         <h2 className="mb-2 text-xl font-semibold tracking-tighter">
             YouTube Comments Analysis
         </h2>
-        <a 
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/RupeshRang95/Sentiment_Analysis_Youtube">Sentiment_Analysis_Youtube</a>
+        <li>
+            <a 
+                className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://github.com/RupeshRang95/Sentiment_Analysis_Youtube">
+                    <p>Sentiment_Analysis_Youtube</p>
+            </a>
+        </li>
+
         <h2 className="mb-2 text-xl font-semibold tracking-tighter">
             Basic Discord Bot
         </h2>
-        <a 
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/BillingtonDev/DiscordBot">DiscordBot</a>
+        <li>
+            <a 
+                className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+                rel="noopener noreferrer"
+                target="_blank"
+                href="https://github.com/BillingtonDev/DiscordBot">
+                    <ArrowIcon />
+                    <p>DiscordBot</p>
+            </a>
+        </li>
       </div>
 
     
