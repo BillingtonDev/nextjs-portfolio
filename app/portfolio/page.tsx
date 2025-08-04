@@ -35,7 +35,7 @@ export default function Page() {
                 target="_blank"
                 href="https://github.com/BillingtonDev/nextjs-portfolio">
                 <ArrowIcon />
-                <p>nextjs-portfolio</p>
+                <p className="ml-2 h-7">nextjs-portfolio</p>
             </a>
         
 
@@ -49,7 +49,7 @@ export default function Page() {
                 target="_blank"
                 href="https://github.com/BillingtonDev/AIProject">
                     <ArrowIcon />
-                    <p>AIProject</p>
+                    <p className="ml-2 h-7">AIProject</p>
             </a>
         
 
@@ -62,7 +62,7 @@ export default function Page() {
                 rel="noopener noreferrer"
                 target="_blank"
                 href="https://github.com/RupeshRang95/Sentiment_Analysis_Youtube">
-                    <p>Sentiment_Analysis_Youtube</p>
+                    <p className="ml-2 h-7">Sentiment_Analysis_Youtube</p>
             </a>
         
 
@@ -76,7 +76,7 @@ export default function Page() {
                 target="_blank"
                 href="https://github.com/BillingtonDev/DiscordBot">
                     <ArrowIcon />
-                    <p>DiscordBot</p>
+                    <p className="ml-2 h-7">DiscordBot</p>
             </a>
         
       </div>
