@@ -7,6 +7,9 @@ const navItems = {
   '/blog': {
     name: 'blog',
   },
+  '/portfolio': {
+    name: 'portfolio',
+  },
   'https://micahstutoring.setmore.com/': {
     name: 'tutor',
   },
