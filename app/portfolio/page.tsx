@@ -2,16 +2,28 @@ export default function Page() {
   return (
     <section>
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter">
-        Here's What I Have Been Working On!
+        My Projects
       </h1>
-      <p className="mb-4">
-        {`I am a data analyst studying computer science at Wilfrid Laurier University mastering Python, 
-        SQL, R, and Power BI. As I try to better understand the world around us through data, engineering, 
-        and statistics I also love to get pulled into the worlds of history and economics. While I am 
-        learning how to apply my skills to the insurance industry, I would love to have a chat about your 
-        journey, and how my skills could impact your business make more efficient processes, and better 
-        decision making.`}
+      <p>
+        {'Here is the source code for some of the things I have worked on. Mostly they are little tid bits of something I was learning, or I was curios about how something worked under the hood.'}
       </p>
+      <h2>
+        This Website
+      </h2>
+      <a href="https://github.com/BillingtonDev/nextjs-portfolio">nextjs-portfolio</a>
+      <h2>
+        Exploring Image Modeling for Melanoma Detection
+      </h2>
+      <a href="https://github.com/BillingtonDev/AIProject">AIProject</a>
+      <h2>
+        YouTube Comments Analysis
+      </h2>
+      <a href="https://github.com/RupeshRang95/Sentiment_Analysis_Youtube">Sentiment_Analysis_Youtube</a>
+      <h2>
+        Basic Discord Bot
+      </h2>
+      <a href="https://github.com/BillingtonDev/DiscordBot">DiscordBot</a>
+
     
     </section>
   )
