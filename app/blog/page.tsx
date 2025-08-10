@@ -1,5 +1,5 @@
 import { BlogPosts } from 'app/components/posts'
-import imageToAdd from "app/assets/laptop.jpg";
+import imageToAdd from 'app/assets/laptop.jpg'
 
 function MyComponent() {
   return <img src={imageToAdd} alt="A Laptop" />;
