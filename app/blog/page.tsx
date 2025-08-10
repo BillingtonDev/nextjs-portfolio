@@ -1,9 +1,9 @@
 import { BlogPosts } from 'app/components/posts'
-declare module "*.jpg";
+
 import imageToAdd from 'app/assets/laptop.jpg'
 
 function MyComponent() {
-  return <img src={imageToAdd} alt="A Laptop" />;
+  return <img src={imageToAdd.src} alt="A Laptop" />;
 }
 
 export const metadata = {
