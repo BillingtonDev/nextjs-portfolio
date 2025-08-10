@@ -1,3 +1,9 @@
+import imageToAdd from 'app/assets/geek.jpg'
+
+function Geek() {
+  return <img src={imageToAdd.src} alt="A Geek" />;
+}
+
 function ArrowIcon() {
   return (
     <svg
@@ -76,7 +82,7 @@ export default function Page() {
                 <p className="ml-3 h-7">DiscordBot</p>
         </a>
       </div>
-    
+    <Geek />
     </section>
   )
 }
