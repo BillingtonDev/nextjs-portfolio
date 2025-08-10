@@ -1,4 +1,9 @@
 import { BlogPosts } from 'app/components/posts'
+import imageToAdd from "./assets/laptop.jpg";
+
+function MyComponent() {
+  return <img src={imageToAdd} alt="A Laptop" />;
+}
 
 export const metadata = {
   title: 'Blog',
@@ -10,6 +15,8 @@ export default function Page() {
     <section>
       <h1 className="font-semibold text-2xl mb-8 tracking-tighter">My Blog</h1>
       <BlogPosts />
+      <MyComponent/>
     </section>
   )
 }
+
