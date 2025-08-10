@@ -1,4 +1,5 @@
 import { BlogPosts } from 'app/components/posts'
+declare module "*.jpg";
 import imageToAdd from 'app/assets/laptop.jpg'
 
 function MyComponent() {
