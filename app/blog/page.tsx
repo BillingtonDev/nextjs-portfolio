@@ -2,7 +2,7 @@ import { BlogPosts } from 'app/components/posts'
 
 import imageToAdd from 'app/assets/laptop.jpg'
 
-function MyComponent() {
+function Laptop() {
   return <img src={imageToAdd.src} alt="A Laptop" />;
 }
 
@@ -16,7 +16,7 @@ export default function Page() {
     <section>
       <h1 className="font-semibold text-2xl mb-8 tracking-tighter">My Blog</h1>
       <BlogPosts />
-      <MyComponent/>
+      <Laptop/>
     </section>
   )
 }
