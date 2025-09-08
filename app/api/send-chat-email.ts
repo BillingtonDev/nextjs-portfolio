@@ -7,6 +7,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const { name, email, message } = req.body;
+  console.log("N8N_WEBHOOK_URL:", process.env.N8N_WEBHOOK_URL);
+  console.log("Request body:", { name, email, message });
+
 
   try {
     const n8nRes = await fetch(process.env.N8N_WEBHOOK_URL!, {
@@ -14,6 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, message }),
     });
+
+    console.log("n8nRes status:", n8nRes.status);
 
     if (!n8nRes.ok) {
       throw new Error("Failed to trigger n8n workflow");
