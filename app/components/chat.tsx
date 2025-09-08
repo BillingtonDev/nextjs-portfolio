@@ -14,10 +14,16 @@ export default function ContactForm() {
     setError(null);
 
     const form = event.currentTarget;
+    const formElements = event.currentTarget.elements as typeof event.currentTarget.elements & {
+      name: HTMLInputElement;
+      email: HTMLInputElement;
+      message: HTMLTextAreaElement;
+    };
+
     const formData = {
-      name: (form.name as HTMLInputElement).value,
-      email: (form.email as HTMLInputElement).value,
-      message: (form.message as HTMLTextAreaElement).value,
+      name: formElements.name.value,
+      email: formElements.email.value,
+      message: formElements.message.value,
     };
 
     try {
