@@ -1,5 +1,5 @@
 import { BlogPosts } from 'app/components/posts'
-import { ContactForm } from 'app/components/chat'
+import ContactForm from "app/components/chat"
 export default function Page() {
   return (
     <section>
