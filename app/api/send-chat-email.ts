@@ -21,6 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     console.log("n8nRes status:", n8nRes.status);
 
     if (!n8nRes.ok) {
+      const errorText = await n8nRes.text();
+      console.error("n8n error:", errorText);
       throw new Error("Failed to trigger n8n workflow");
     }
 
