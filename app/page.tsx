@@ -1,5 +1,5 @@
 import { BlogPosts } from 'app/components/posts'
-
+import { ContactForm } from 'app/components/chat'
 export default function Page() {
   return (
     <section>
@@ -35,6 +35,13 @@ export default function Page() {
         >
         <p>Book Now</p>
         </a>
+      </div>
+      <div>
+        <section>
+          <h2>Contact Me</h2>
+          <ContactForm />
+        </section>
+        
       </div>
     
     </section>
