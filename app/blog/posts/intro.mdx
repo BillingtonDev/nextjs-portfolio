@@ -1,249 +1,305 @@
 ---
-title: 'Coming Soon'
-publishedAt: '2025-02-21'
-summary: 'Notes to Self Blog about what I have thought about, am reading, and ideas for the future.'
+title: "Entangled Games and Networks"
+author: "Micah Billington"
+date: "April 2025"
 ---
 
-$$\documentclass[11pt]{article}
-\usepackage{graphicx} 
-\usepackage{array}
-\usepackage{amsmath}
-\usepackage{mathtools}
-\DeclarePairedDelimiter\bra{\langle}{\rvert}
-\DeclarePairedDelimiter\ket{\lvert}{\rangle}
-\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1\,\delimsize\vert\,\mathopen{}#2}
-\usepackage{setspace}
-\usepackage{subcaption}
-\usepackage{url}
-\usepackage{csquotes}
-\usepackage[style=mla,backend=biber, version=1]{biblatex}
-\addbibresource{src.bib}
+# Entangled Games and Networks
 
-\title{Entangled Games and Networks}
-\author{Micah Billington} 
-\date{April 2025}
-\sloppy
-\begin{document}
-\maketitle
-\tableofcontents
-\doublespacing
+## Table of Contents
+- [Introduction](#introduction)
+- [The Games We Play](#the-games-we-play)
+  - [The Prisoner's Dilemma](#the-prisoners-dilemma)
+  - [Cournot's Duopoly Game](#cournots-duopoly-game)
+- [Playing at Networking](#playing-at-networking)
+  - [The Measures of Success](#the-measures-of-success)
+  - [Two Networks with Classical and Quantum Games](#two-networks-with-classical-and-quantum-games)
+  - [Implementation and Results](#implementation-and-results)
+- [Conclusion](#conclusion)
+- [Further Reading](#further-reading)
+- [Appendix 1 - Latency Analysis](#appendix-1---latency-analysis)
 
-\section{Introduction}
-\begin{flushleft}
-To be or not to be is a question the strategic mind has asked for centuries since the penning of \textit{The Art of War} (\cite{Niou}).  John von Neumann and Oskar Morgenstern(\cite{Neumann}) entered the stage with a new formulation of strategy, by applying numerical methods derived from economics and mathematics to draw the curtain on a new mode of decision making. This new act allowed unemotional choice, a great asset from the fog of cold war to the global market of commerce, and every place where an agent must say yay, or nay(\cite{Stanford}). 
-\end{flushleft}
-\begin{flushleft}
-With the emergence of quantum computing a new stage was opened for this tool set, and in 1998 David A. Meyer began to utilize it in an effort to study more efficient algorithms through \textit{Quantum Strategies}, although there were earlier still explorers of the idea. This was soon taken up by Eisert, Wilkens, and Lewenstein(\cite{Khan}) in \textit{Quantum games and quantum strategies}. The use of entanglement in a game allows for cooperation, information sharing without physical connection, and in the very least another perspective to answer Hamlet’s inquiry. 
-It is a valuable perspective to have when solving problems in settings where there is limited historical data, and many decisions to be made, ideally simultaneously, such as in a network. 
-\end{flushleft}
-\begin{flushleft}
+## Introduction
+
+To be or not to be is a question the strategic mind has asked for centuries since the penning of *The Art of War* ([Niou]). John von Neumann and Oskar Morgenstern ([Neumann]) entered the stage with a new formulation of strategy, by applying numerical methods derived from economics and mathematics to draw the curtain on a new mode of decision making. This new act allowed unemotional choice, a great asset from the fog of cold war to the global market of commerce, and every place where an agent must say yay, or nay ([Stanford]). 
+
+With the emergence of quantum computing a new stage was opened for this tool set, and in 1998 David A. Meyer began to utilize it in an effort to study more efficient algorithms through *Quantum Strategies*, although there were earlier still explorers of the idea. This was soon taken up by Eisert, Wilkens, and Lewenstein ([Khan]) in *Quantum games and quantum strategies*. The use of entanglement in a game allows for cooperation, information sharing without physical connection, and in the very least another perspective to answer Hamlet’s inquiry. It is a valuable perspective to have when solving problems in settings where there is limited historical data, and many decisions to be made, ideally simultaneously, such as in a network. 
+
 Although mostly theoretical, quantum games provide benefits in a quantum internet, and help to address some of the issues in that space, such as latency and fidelity. They also are beneficial, or at least provide a new framing, in the economic sphere where coordination and information allow for more cooperative outcomes. In order to consider networks, quantum games in the economic sphere will be discussed to understand their benefits. This will be primarily derived from a survey conducted by Haoshu Wang who considered the added benefit, or effect of placing classical games in terms of quantum, answering the accusation that a quantum game does not add anything new to Game Theory. Thus, quantum game theory both impacts the firms of today, and potentially the internet of tomorrow.
-\end{flushleft}
 
-\section{The Games We Play}
-\subsection{The Prisoner's Dilemma}
-\begin{flushleft}
+## The Games We Play
+
+### The Prisoner's Dilemma
+
 The first game traditionally encountered, whether in current events or microeconomics, is the prisoner's dilemma. The decision problem is staged such that two players, the proverbial Alice and Bob, are given the choice to confess or deny while in custody. This results in the following matrix where the payoff is communicated as (Alice, Bob).
-\end{flushleft}
-\begin{tabular}{ | m{2 cm}| m{2cm}| m{2cm}| } 
-  \hline
-   & Confess$_{Bob}$ & Lie$_{Bob}$ \\ 
-  \hline
-  Confess$_{Alice}$ & (3,3) & (0,5) \\ 
-  \hline
-  Lie$_{Alice}$ & (5,0) & (1,1) \\ 
-  \hline
-\end{tabular}
-\begin{flushleft}
-The payoff ($\$$) results in r=3, p=1, t=5, and s=0, as seen in the diagram for each scenario. In quantum games we can make each of the options into the two basis vectors, for example $\ket{C}$ for confess, and $\ket{D}$ for deny. Then to describe the strategy of Alice (A) and Bob (B) we would construct the state $\ket{AB}$. This gives four possibilities $\ket{CC}$, $\ket{CD}$, $\ket{DC}$, and $\ket{DD}$. In order to introduce the player's moves or decisions we will implement two operators $U_A$ and $U_B$. These unitary matrices will act upon the basis state $\ket{\psi_0}=\hat{J} \ket{CC}$ .
-\end{flushleft}
-Let the strategy $\hat{U}(\theta,\phi)=
+
+|                 | Confess<sub>Bob</sub> | Lie<sub>Bob</sub> |
+|-----------------|-----------------------|------------------|
+| Confess<sub>Alice</sub> | (3,3)                | (0,5)            |
+| Lie<sub>Alice</sub>     | (5,0)                | (1,1)            |
+
+The payoff ($) results in \( r=3 \), \( p=1 \), \( t=5 \), and \( s=0 \), as seen in the diagram for each scenario. In quantum games we can make each of the options into the two basis vectors, for example \( \ket{C} \) for confess, and \( \ket{D} \) for deny. Then to describe the strategy of Alice (A) and Bob (B) we would construct the state \( \ket{AB} \). This gives four possibilities \( \ket{CC} \), \( \ket{CD} \), \( \ket{DC} \), and \( \ket{DD} \). In order to introduce the player's moves or decisions we will implement two operators \( U_A \) and \( U_B \). These unitary matrices will act upon the basis state \( \ket{\psi_0} = \hat{J} \ket{CC} \).
+
+Let the strategy
+
+\[
+\hat{U}(\theta,\phi) = 
 \begin{pmatrix}
-e^{i\phi cos(\frac{\theta}{2})} & sin(\frac{\theta}{2})\\
-cos(\frac{-\theta}{2}) & e^{-i\phi sin(\frac{\theta}{2})} 
+e^{i\phi \cos(\frac{\theta}{2})} & \sin(\frac{\theta}{2}) \\
+\cos(-\frac{\theta}{2}) & e^{-i\phi \sin(\frac{\theta}{2})}
 \end{pmatrix}
-$\\
-The strategy can be taken from a subset described as $S_0=\{ (\hat{U})(\theta , 0)|\theta \in [0,\pi] \}$.
-To describe the strategies cooperate ($\hat{C}$), and defect ($\hat{D}$) the following matrices will be used. \\
-$\hat{C}=\hat{U}(0,0)=
-\begin{pmatrix}
-1 & 0\\
-0 & 1 
-\end{pmatrix}=I
-$\\
-$\hat{D}=\hat{U}(\pi,0)=
-\begin{pmatrix}
-0 & 1\\
--1 & 0 
-\end{pmatrix}=ZX
-$\\
-Since the prisoner's get results from their strategies, as seen in the matrix, we need a way to measure payoff ($\$_A$). The payoff is described as:\\ 
-$\$_A = rP_{CC}+ pP_{DD} +tP_{DC}+sP_{CD}$. Such that, $P_{CC}=p^{(C)}_A\times p^{(C)}_B$.
-\begin{flushleft}
-Where r,p,t, and s are the payoff as seen in the matrix. The probability of cooperation is $p^{(c)}=cos^2 (\frac{\theta}{2})$, and the probability of denying is $p^{(d)}=1-cos^2(\frac{\theta}{2})$. By setting up the game, as we have done now, in a quantum context it is now possible to entangle the states before interrogating Alice and Bob. To describe entanglement $\gamma$ will be used. When equal to 0 the game is classical. Jens Eisert, Maciej Lewenstein, and Martin Wilkens presented graphs of the effect which will be considered. The first case, as mentioned, is the classical. This is when entanglement, as represented by $\gamma\in [0,\frac{\pi}{2}]$, is at 0. For A especially, no matter what B does, the best strategy is to Defect, regardless of B. This then is where the game finds its Nash Equilibrium. 
-\end{flushleft}
+\]
 
-\begin{figure}[h!]
-\centering
-\begin{subfigure}{.5\textwidth}
-    \centering
-    \includegraphics[width=1\linewidth]{image.png}
-    \caption{The Classical Case(\cite{Eisert}}
-    \label{fig:enter-label}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-    \centering
-    \includegraphics[width=1\linewidth]{entangledprisoner.png}
-    \caption{Maximally Entangled Case(\cite{Eisert})}
-    \label{fig:enter-label}
-\end{subfigure}
-\end{figure}
-\begin{flushleft}
-Here it is quite evident that denying is the preferred strategy with the largest payoff, with denying at the center and confession on the edge (Figure 1). Conversely, when entanglement has occurred there is an effect on the outcomes of strategies. The example considered is when the entanglement of the model is maximized at $\frac{\pi}{2}$. Now the strategy which both prisoner's will reach is not one of denying, but with better payoff. Although there are places where the payoff is greater still to deny, it is quite evident that confessing has become far more advantageous (Figure 2). This is seen when applied to Q.  
-\end{flushleft}
+The strategy can be taken from a subset described as \( S_0 = \{ (\hat{U})(\theta , 0) \mid \theta \in [0,\pi] \} \).
 
-In the case where entanglement $\gamma=\frac{\pi}{2}$, A's optimal strategy is $Q=U(0,\frac{\pi}{2})=
+To describe the strategies cooperate (\( \hat{C} \)) and defect (\( \hat{D} \)) the following matrices will be used.
+
+\[
+\hat{C} = \hat{U}(0,0) = 
 \begin{pmatrix}
-i & 0\\
-0 & -i 
+1 & 0 \\
+0 & 1
+\end{pmatrix} = I
+\]
+
+\[
+\hat{D} = \hat{U}(\pi,0) = 
+\begin{pmatrix}
+0 & 1 \\
+-1 & 0
+\end{pmatrix} = ZX
+\]
+
+Since the prisoners get results from their strategies, as seen in the matrix, we need a way to measure payoff (\( \$_A \)). The payoff is described as: 
+
+\[
+\$_A = rP_{CC} + pP_{DD} + tP_{DC} + sP_{CD}
+\]
+
+Such that, \( P_{CC} = p^{(C)}_A \times p^{(C)}_B \).
+
+Where \( r,p,t, \) and \( s \) are the payoff as seen in the matrix. The probability of cooperation is \( p^{(c)} = \cos^{2} \left(\frac{\theta}{2}\right) \), and the probability of denying is \( p^{(d)} = 1 - \cos^{2} \left(\frac{\theta}{2}\right) \). By setting up the game, as we have done now, in a quantum context it is now possible to entangle the states before interrogating Alice and Bob. To describe entanglement \( \gamma \) will be used. When equal to 0 the game is classical. Jens Eisert, Maciej Lewenstein, and Martin Wilkens presented graphs of the effect which will be considered. The first case, as mentioned, is the classical. This is when entanglement, as represented by \( \gamma \in [0, \frac{\pi}{2}] \), is at 0. For A especially, no matter what B does, the best strategy is to Defect, regardless of B. This then is where the game finds its Nash Equilibrium. 
+
+<div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+  <figure style={{ flex: 1, marginRight: '1rem' }}>
+    <img src="/images/image.png" alt="The Classical Case" style={{ width: '100%' }}/>
+    <figcaption>The Classical Case ([Eisert])</figcaption>
+  </figure>
+  <figure style={{ flex: 1 }}>
+    <img src="/images/entangledprisoner.png" alt="Maximally Entangled Case" style={{ width: '100%' }}/>
+    <figcaption>Maximally Entangled Case ([Eisert])</figcaption>
+  </figure>
+</div>
+
+Here it is quite evident that denying is the preferred strategy with the largest payoff, with denying at the center and confession on the edge (Figure 1). Conversely, when entanglement has occurred there is an effect on the outcomes of strategies. The example considered is when the entanglement of the model is maximized at \( \frac{\pi}{2} \). Now the strategy which both prisoners will reach is not one of denying, but with better payoff. Although there are places where the payoff is greater still to deny, it is quite evident that confessing has become far more advantageous (Figure 2). This is seen when applied to Q.
+
+In the case where entanglement \( \gamma = \frac{\pi}{2} \), A's optimal strategy is 
+
+\[
+Q = U\left(0, \frac{\pi}{2}\right) = 
+\begin{pmatrix}
+i & 0 \\
+0 & -i
 \end{pmatrix}
-$. 
-\begin{flushleft}
-If B chooses to cooperate, A's best strategy is to defect. For this reason there is no strategy where A is dominant, and since the game is symmetric this also applies to B. Therefore, defection is no longer the Nash Equilibrium. The new Nash Equilibrium is to choose Q. This can be seen when B chooses Q, then the payoff for A results in
-\end{flushleft}
-$\$_A[U(\theta,\phi),Q]=cos^2(0)(3sin^2(\frac{\pi}{2})(3sin^2(\phi)+cos^2(\phi))\leq3, \theta\in[0,\pi], \phi\in[0,\frac{\pi}{2}]$\\
-\begin{flushleft}
-When Q is chosen $\theta=0, \phi=\frac{\pi}{2}$. When calculates this looks like $\$_A[Q,Q]=cos^2(0)(3sin^2(\frac{\pi}{2})+cos^2(\frac{\pi}{2}))=3\geq\$_A[U(\theta,\phi),Q]$. Thus, both A and B, because of symmetry, should choose Q. By introducing entanglement a situation has been created such that the strategy A and B will arrive at in Nash Equilibrium has a higher payoff.    
-\end{flushleft}
-\begin{flushleft}
-Thus, the use of entanglement does cause an affect upon the outcome of a game in a quantum stage, apposed to a classical performance of the Prisoner's Dilemma. In the very least it is another nuance to consider when approaching games(\cite{Wang}).
-\end{flushleft}
+\]
 
-\subsection{Cournot's Duopoly Game}
-\begin{flushleft}
-This game studies the affect of an oligopoly, where two or more firms have a monopoly status on a market. The original game is set with both firms selling identical products, and deciding the quantity of goods to produce. The total quantity is described as Q where the total is comprised of the sum of total production ($q_1+q_2$). To describe the production of the entire market, the function P is used, with constant a, where:    
-\end{flushleft}
-$P(Q)= \begin{cases} 
-      a-Q & Q<a\\
-      0 & Q\geq a
+If B chooses to cooperate, A's best strategy is to defect. For this reason there is no strategy where A is dominant, and since the game is symmetric this also applies to B. Therefore, defection is no longer the Nash Equilibrium. The new Nash Equilibrium is to choose \( Q \). This can be seen when B chooses \( Q \), then the payoff for A results in
+
+\[
+\$_A[U(\theta,\phi),Q] = \cos^{2}(0)(3\sin^{2}(\frac{\pi}{2})(3\sin^{2}(\phi)+\cos^{2}(\phi)) \leq 3, \quad \theta \in [0,\pi], \quad \phi \in [0,\frac{\pi}{2}]
+\]
+
+When \( Q \) is chosen \( \theta=0, \phi=\frac{\pi}{2} \). When calculated this looks like 
+
+\[
+\$_A[Q,Q] = \cos^{2}(0)(3\sin^{2}(\frac{\pi}{2}) + \cos^{2}(\frac{\pi}{2})) = 3 \geq \$_A[U(\theta,\phi),Q]
+\]
+
+Thus, both A and B, because of symmetry, should choose \( Q \). By introducing entanglement a situation has been created such that the strategy A and B will arrive at in Nash Equilibrium has a higher payoff.
+
+Thus, the use of entanglement does cause an effect upon the outcome of a game in a quantum stage, opposed to a classical performance of the Prisoner's Dilemma. In the very least it is another nuance to consider when approaching games ([Wang]).
+
+### Cournot's Duopoly Game
+
+This game studies the effect of an oligopoly, where two or more firms have a monopoly status on a market. The original game is set with both firms selling identical products, and deciding the quantity of goods to produce. The total quantity is described as \( Q \) where the total is comprised of the sum of total production (\( q_1 + q_2 \)). To describe the production of the entire market, the function \( P \) is used, with constant \( a \), where:    
+
+\[
+P(Q) = \begin{cases} 
+      a - Q & Q < a \\
+      0 & Q \geq a
    \end{cases}
-$
-\begin{flushleft}
-The cost per unit of production for a firm can be described as:\\
-$u_i(q_1,q_2)=q_i[P(Q)-c]\textit{for i}\in\{0,1\}$. Information is not perfect in application, however, so Firm 2 has the information that Firm 1 has cost c. This occurs while Firm 1 thinks Firm 2 has cost c'. Firm 1 makes the calculation that Firm 2 produce $q_2=q_2^*$ where $q_2^*$ is the production which maximizes Firm 2's profit. Firm 1 then makes the following further calculations for cost:
-\end{flushleft}
-$u_2(q_1^*, q_2)=q_2[a-q_1^*-q_2-c']$\\
-$u_1(q_1,q_2^*)=q_1[a-q_1-q_2^*-c]$. 
-\begin{flushleft}
-To calculate the information error of Firm 1 we will calculate $\sigma = \frac{c-c'}{a-c}$. By solving the two problems the following is given:
-\end{flushleft}
-$q_1^*=\frac{1}{3}(1-\sigma)k$ and $q_2^*=\frac{1}{6}(2+\sigma)k$, where $k=a-c$.\\
-The product cost then is $P(Q)-c=a-\frac{1}{3}(1-\sigma)k-\frac{1}{6}(2+\sigma)k-c=\frac{1}{6}(2+\sigma)k$
-\begin{flushleft}
+\]
+
+The cost per unit of production for a firm can be described as:
+
+\[
+u_i(q_1,q_2) = q_i[P(Q) - c] \quad \text{for } i \in \{0,1\}
+\]
+
+Information is not perfect in application, however, so Firm 2 has the information that Firm 1 has cost \( c \). This occurs while Firm 1 thinks Firm 2 has cost \( c' \). Firm 1 makes the calculation that Firm 2 produce \( q_2 = q_2^* \) where \( q_2^* \) is the production which maximizes Firm 2's profit. Firm 1 then makes the following further calculations for cost:
+
+\[
+u_2(q_1^*, q_2) = q_2[a - q_1^* - q_2 - c']
+\]
+
+\[
+u_1(q_1, q_2^*) = q_1[a - q_1 - q_2^* - c]
+\]
+
+To calculate the information error of Firm 1 we will calculate \( \sigma = \frac{c - c'}{a - c} \). By solving the two problems the following is given:
+
+\[
+q_1^* = \frac{1}{3}(1 - \sigma) k \quad \text{and} \quad q_2^* = \frac{1}{6}(2 + \sigma) k, \quad \text{where } k = a - c
+\]
+
+The product cost then is 
+
+\[
+P(Q) - c = a - \frac{1}{3}(1 - \sigma) k - \frac{1}{6}(2 + \sigma) k - c = \frac{1}{6}(2 + \sigma) k
+\]
+
 To then get the total profit for each firm under these optimal quantities the following is conducted:
-\end{flushleft}
-$u_1^*=q_1^*(P(Q)-c)=\frac{1}{3}(1-\sigma)k\times\frac{1}{6}(2+\sigma)=\frac{1}{18}(2-\sigma-\sigma^2)k^2$\\
-$u_2^*=q_2^*(P(Q)-c)=\frac{1}{6}(2+\sigma)k\times\frac{1}{6}(2+\sigma)k=\frac{1}{36}(4+4\sigma+\sigma^2)k^2$
-\begin{flushleft}
-If $q^*_x\leq 0$ Firm x will leave the market. $q^*_2$ is a monotone increasing function, it is constant or going up, so in respect to $\sigma$ increasing it will not cause Firm 2 to leave the market. However, when $\sigma \geq 1$, $q^*_1=\frac{1}{3}(1-\sigma)k$ causing Firm 1 to leave the market, as indicated by the negative in the function. Since Q is a decreasing monotone function, going down or constant, where $Q=q^*_1+q^*_2=\frac{1}{6}(4-\sigma)$, increasing $\sigma$ will cause an inefficient market, highest price and lowest production. This is altered when entanglement is introduced. Instead of operating under the terms of $q_i$ a new policy is implemented through strategy parameters $x_i\in(-\infty, \infty)$ for $i\in\{0,1\}$. The quantity for Firm 1 now appears as
-\end{flushleft}
-$q_1(x_1,x_2)=x_1cosh(\gamma)+x_2sinh(\gamma)$,
-and Firm 2 in the form of $q_2(x_1,x_2)=x_2cosh(\gamma)+x_1sinh(\gamma)$. 
-\begin{flushleft}
-Now $x^*_1$ is chosen to maximize profit for Firm 1 through $u_1(x_1,x_2^*)=q_1(x_1,x_2^*)[P(x_1,x_2^*)-c]$, with Firm 2 doing similarly with c'. Solving this optimization results in $x_1^*=\frac{(1-e^{2\gamma})cosh\gamma}{1+2e^{2\gamma}}k$, and $x_2^*=\frac{(1+e^{2\gamma}+e^{4\gamma}\sigma)}{2e^{\gamma}(1+2e^{2\gamma})}k$, where $\sigma$ is defined in the same terms as the classical formulation. When $x_1^*$ and $x_2^*$ are put into $u_1$ and $u_2$ a similar situation arises where Firm 2 is a monotone function increasing, but Firm 1 is a monotone function decreasing and leaving the market. The following function is then introduced: $\sigma'(\gamma)=\frac{2(1+e^{2\gamma})}{1+3e^{2\gamma}}$ which is inherently bounded by $\frac{2}{3}\leq\sigma'(\gamma)\leq2$.
-\end{flushleft}
-\begin{flushleft}
-A governing body can then increase the entanglement, as represented by $\gamma$, to increase $\sigma'$ while $\sigma<2$. In this scenario $Q=q^*_1+q^*_2=\frac{1+e^{2\gamma}}{2(1+2e^{2\gamma})}(2-\frac{e^{2\gamma}}{1+e^{2\gamma}}\sigma)k$. In this formulation the government can now decrease the entanglement of the firms to increase production, and lower prices. This ensures that even with a difference in information a monopoly is not formed by decreasing the entanglement of the firms. Thus, with quantum game theory entanglement is introduced to avoid inefficiency in the market due to oligopolies and potential monopolies by controlling the error in information(\cite{Wang}).    
-\end{flushleft}
-\section{Playing at Networking}
-\begin{flushleft}
-In essence quantum games have come full circle, after being prompted for more efficient algorithms, to address another set of issues in quantum computing, networking. This was contributed by Indrakshi Dey, Nicola Marchetti, Marcello Caleffi, and Angela Sara Cacciapuoti in the paper \textit{Quantum Game Theory meets Quantum Networks} in 2024. The application of game theory to networking is not new, as examples such as IoT are considered, because of their benefit when presented with large networks and limited data, which learning models would rely on. If a quantum internet is implemented the effects of quantum games compared to the classical realm could be utilized where quantum could outperform by utilizing correlated outcomes without physical direct communication.
-\end{flushleft}
-\subsection{The Measures of Success}
-\begin{flushleft}
+
+\[
+u_1^* = q_1^* (P(Q) - c) = \frac{1}{3}(1 - \sigma) k \times \frac{1}{6}(2 + \sigma) = \frac{1}{18}(2 - \sigma - \sigma^2) k^2
+\]
+
+\[
+u_2^* = q_2^* (P(Q) - c) = \frac{1}{6}(2 + \sigma) k \times \frac{1}{6}(2 + \sigma) k = \frac{1}{36}(4 + 4\sigma + \sigma^2) k^2
+\]
+
+If \( q_x^* \leq 0 \) Firm \( x \) will leave the market. \( q_2^* \) is a monotone increasing function, it is constant or going up, so in respect to \( \sigma \) increasing it will not cause Firm 2 to leave the market. However, when \( \sigma \geq 1 \), 
+
+\[
+q_1^* = \frac{1}{3} (1 - \sigma) k
+\]
+
+causing Firm 1 to leave the market, as indicated by the negative in the function. Since \( Q \) is a decreasing monotone function, going down or constant, where 
+
+\[
+Q = q_1^* + q_2^* = \frac{1}{6}(4 - \sigma)
+\]
+
+increasing \( \sigma \) will cause an inefficient market, highest price and lowest production. This is altered when entanglement is introduced. Instead of operating under the terms of \( q_i \) a new policy is implemented through strategy parameters \( x_i \in (-\infty, \infty) \) for \( i \in \{0,1\} \). The quantity for Firm 1 now appears as
+
+\[
+q_1(x_1,x_2) = x_1 \cosh(\gamma) + x_2 \sinh(\gamma),
+\]
+
+and Firm 2 in the form of 
+
+\[
+q_2(x_1,x_2) = x_2 \cosh(\gamma) + x_1 \sinh(\gamma).
+\]
+
+Now \( x_1^* \) is chosen to maximize profit for Firm 1 through 
+
+\[
+u_1(x_1,x_2^*) = q_1(x_1,x_2^*) [P(x_1,x_2^*) - c],
+\]
+
+with Firm 2 doing similarly with \( c' \). Solving this optimization results in 
+
+\[
+x_1^* = \frac{(1 - e^{2\gamma}) \cosh \gamma}{1 + 2 e^{2\gamma}} k,
+\]
+
+and 
+
+\[
+x_2^* = \frac{(1 + e^{2\gamma} + e^{4\gamma} \sigma)}{2 e^\gamma (1 + 2 e^{2\gamma})} k,
+\]
+
+where \( \sigma \) is defined in the same terms as the classical formulation. When \( x_1^* \) and \( x_2^* \) are put into \( u_1 \) and \( u_2 \) a similar situation arises where Firm 2 is a monotone function increasing, but Firm 1 is a monotone function decreasing and leaving the market. The following function is then introduced: 
+
+\[
+\sigma'(\gamma) = \frac{2(1 + e^{2\gamma})}{1 + 3 e^{2\gamma}},
+\]
+
+which is inherently bounded by \( \frac{2}{3} \leq \sigma'(\gamma) \leq 2 \).
+
+A governing body can then increase the entanglement, as represented by \( \gamma \), to increase \( \sigma' \) while \( \sigma < 2 \). In this scenario 
+
+\[
+Q = q_1^* + q_2^* = \frac{1 + e^{2\gamma}}{2(1 + 2 e^{2\gamma})} \left( 2 - \frac{e^{2\gamma}}{1 + e^{2\gamma}} \sigma \right) k.
+\]
+
+In this formulation the government can now decrease the entanglement of the firms to increase production, and lower prices. This ensures that even with a difference in information a monopoly is not formed by decreasing the entanglement of the firms. Thus, with quantum game theory entanglement is introduced to avoid inefficiency in the market due to oligopolies and potential monopolies by controlling the error in information ([Wang]).    
+
+## Playing at Networking
+
+In essence quantum games have come full circle, after being prompted for more efficient algorithms, to address another set of issues in quantum computing, networking. This was contributed by Indrakshi Dey, Nicola Marchetti, Marcello Caleffi, and Angela Sara Cacciapuoti in the paper *Quantum Game Theory meets Quantum Networks* in 2024. The application of game theory to networking is not new, as examples such as IoT are considered, because of their benefit when presented with large networks and limited data, which learning models would rely on. If a quantum internet is implemented the effects of quantum games compared to the classical realm could be utilized where quantum could outperform by utilizing correlated outcomes without physical direct communication.
+
+### The Measures of Success
+
 In this scenario, as described in the afore mentioned paper, an entanglement distribution is presented where a secure link is made between two nodes within a fixed layout of devices and connections in a network, or network topology. The measurements to compare performance are fidelity or reliability, entanglement rate or the number of entanglements made between two nodes in a set time, and link latency. Although this was not the first paper on a quantum internet, it does consider the benefits over a classical implementation. To describe a game in terms of distribution for a fixed network topology, nodes are players, payoff is entanglement rate and fidelity, and latency is cost. To compare, in this case, classical and quantum strategies the Nash Equilibrium is used for classical while Wardrop equilibrium is used for the quantum application. Wardrop equilibrium is the state that each user chooses the least travel time route in a network and will be used as the measure of Nash Equilibrium for comparison. The following functions are derived.
-\end{flushleft}
-\begin{enumerate}
-    \item $U_i$ = Payoff$_i$ - Cost Function$_i$
-    \item Payoff$_i$ = Fidelity$_i$ + Entanglement Rate$_i$
-    \item Cost Function$_i$ = Link Latency$_i$
-    \item Strategy of ith node=Unitary Rotation on Qubit
-\end{enumerate}
-\begin{flushleft}
-The goal is to have fidelity increase, entanglement rate to be steady or increasing, and latency to be low. Unitary rotations cause randomness which will benefit the quantum strategy as considered latter.    
-\end{flushleft}
-\subsection{Two Networks with Classical and Quantum Games}
-\begin{flushleft}
+
+1. \( U_i = \text{Payoff}_i - \text{Cost Function}_i \)
+2. \( \text{Payoff}_i = \text{Fidelity}_i + \text{Entanglement Rate}_i \)
+3. \( \text{Cost Function}_i = \text{Link Latency}_i \)
+4. Strategy of \( i^{th} \) node = Unitary Rotation on Qubit
+
+The goal is to have fidelity increase, entanglement rate to be steady or increasing, and latency to be low. Unitary rotations cause randomness which will benefit the quantum strategy as considered later.
+
+### Two Networks with Classical and Quantum Games
+
 With these defined two scenarios are presented. 
-The first is a network with N super nodes which can generate M-partite cluster state. Between each of these super nodes there is L repeater nodes between each pair. The example given is a topology with N=3, M=4, and L=2. The goal in this scenario is to make a connection between A and B which minimizes the number of operations and latency in the entanglement distribution, maximizes fidelity, and maintains the overall entanglement rate of the target. The time that a quantum state is maintained, coherence time, are the links where shorter coherence time makes fewer hops. 
-\end{flushleft}
 
-\begin{figure}[h!]
-\centering
-\begin{subfigure}{.5\textwidth}
-    \centering
-    \includegraphics[width=1\linewidth]{scenario1.png}
-    \caption{Scenario 1(\cite{Dey})}
-    \label{fig:enter-label}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-    \centering
-    \includegraphics[width=1\linewidth]{scenario2.png}
-    \caption{Scenario 2 - Where 1 and 6 are leaders, red values are latency, blue are fidelity, and values in curly braces are possible next hops.(\cite{Dey})}
-    \label{fig:enter-label}
-\end{subfigure}
-\end{figure}
-\begin{flushleft}
-The second scenario is a group of trees with one source, and multiple leaf nodes which form the second network topology. The condition is made that the source can only communicate to one destination, leaf node, at a time. In this scenario we are looking for the best path between a source (A), and destination (B) in different trees. Each node will decide the next hop. 
-\end{flushleft}
-\begin{flushleft}
+The first is a network with \( N \) super nodes which can generate \( M \)-partite cluster state. Between each of these super nodes there is \( L \) repeater nodes between each pair. The example given is a topology with \( N=3 \), \( M=4 \), and \( L=2 \). The goal in this scenario is to make a connection between A and B which minimizes the number of operations and latency in the entanglement distribution, maximizes fidelity, and maintains the overall entanglement rate of the target. The time that a quantum state is maintained, coherence time, are the links where shorter coherence time makes fewer hops.
+
+<div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+  <figure style={{ flex: 1, marginRight: '1rem' }}>
+    <img src="/images/scenario1.png" alt="Scenario 1" style={{ width: '100%' }}/>
+    <figcaption>Scenario 1 ([Dey])</figcaption>
+  </figure>
+  <figure style={{ flex: 1 }}>
+    <img src="/images/scenario2.png" alt="Scenario 2" style={{ width: '100%' }}/>
+    <figcaption>Scenario 2 - Where 1 and 6 are leaders, red values are latency, blue are fidelity, and values in curly braces are possible next hops. ([Dey])</figcaption>
+  </figure>
+</div>
+
+The second scenario is a group of trees with one source, and multiple leaf nodes which form the second network topology. The condition is made that the source can only communicate to one destination, leaf node, at a time. In this scenario we are looking for the best path between a source (A), and destination (B) in different trees. Each node will decide the next hop.
+
 In the first scenario, if the game is played in a classical manner, based off of the node's strategy it each receives a 'value of coalition', the target network throughput. This occurs if it becomes part of the target coalition. Those excluded and unable to join can prevent the coalition from getting more than the value of coalition. When made quantum an arbiter, the leader node, is implemented this creates a quantum cluster state which is forwarded to the players. Each single state received by each player has a unitary rotation by that player. The result is sent back to the leader, arbiter, which is measured giving the payoff. If the states are unentangled, it becomes the classical game.     
-\end{flushleft}
-\begin{flushleft}
+
 The second scenario operates as follows. In the classical version each node hops to the two options, seeking to maximize its payoff. However, although single nodes are autonomous, other nodes by effect influence the overall utility. In contrast the quantum version implements fair randomness at each node. Furthermore, nodes, agree upon and are aware of other decisions in the network regarding link information and outcomes. This causes convergence even with multiple nodes simultaneously making decisions.     
-\end{flushleft}
 
-\subsection{Implementation and Results}
-\begin{flushleft}
-First the Nash Equilibrium for the implementation of the game-based link model for a quantum network were measured with numerical evaluations. The results were the average of 1000 trials per parameter setting with synchronization time steps of 300$\mu s$. The probability of a link forming was then defined as $p(m,n)=\mu exp[-d(m,n)/\delta\lambda]$ representing the distance between nodes (m and n) in Euclidean space, $\delta$ is the maximum distance between the nodes, $\mu$ is the control parameter for the number of edges, and $\lambda$ is the control parameter for the length of links. When this is implemented the latency can be analyzed to find the Nash equilibrium, critically between leader and repeater nodes. The result is in Appendix 1.
+### Implementation and Results
+
+First the Nash Equilibrium for the implementation of the game-based link model for a quantum network were measured with numerical evaluations. The results were the average of 1000 trials per parameter setting with synchronization time steps of 300 \( \mu s \). The probability of a link forming was then defined as 
+
+\[
+p(m,n) = \mu \exp\left[-\frac{d(m,n)}{\delta \lambda}\right]
+\]
+
+representing the distance between nodes (m and n) in Euclidean space, \( \delta \) is the maximum distance between the nodes, \( \mu \) is the control parameter for the number of edges, and \( \lambda \) is the control parameter for the length of links. When this is implemented the latency can be analyzed to find the Nash equilibrium, critically between leader and repeater nodes. The result is in Appendix 1.
+
 The effect of these different models, classical and quantum, as applied to the two scenarios were measured next.  
-\end{flushleft}
-\begin{flushleft}
-These were run in four ways no game with a classical network (CN), a classical game with a classical network, a classical game with a quantum network (QN), and a quantum game with a quantum network. The quantum solution clearly comes out on top as seen in the following figures (Figures 5 and 6) when latency and fidelity are tracked. This comes from the randomness of a quantum state, as created from a superposition, after entanglement. Whereas a classical system is flipping a coin between two equal possibilities, a quantum system by rotation can increase their probability while in uncertainty until measured. For this reason a classical system performs better until there are more than two nodes, where it far surpasses through simultaneous decision making. The edge quantum has over classical games is essentially that multiple strategies can be considered simultaneously(\cite{Dey}).
-\end{flushleft}
 
-\begin{figure}[h!]
-\centering
-\begin{subfigure}{0.5\linewidth}
-    \centering
-    \includegraphics[width=1\linewidth]{latency_cp.png}
-    \caption{Latency Comparison(\cite{Dey})}
-    \label{fig:enter-label}
-\end{subfigure}%
-\begin{subfigure}{0.5\linewidth}
-    \centering
-    \includegraphics[width=1\linewidth]{fidelity_cp.png}
-    \caption{Fidelity Comparison - Decoherence can be thought of as damping or depolarizing.(\cite{Dey})}
-    \label{fig:enter-label}
-\end{subfigure}
-\end{figure}
+These were run in four ways no game with a classical network (CN), a classical game with a classical network, a classical game with a quantum network (QN), and a quantum game with a quantum network. The quantum solution clearly comes out on top as seen in the following figures (Figures 5 and 6) when latency and fidelity are tracked. This comes from the randomness of a quantum state, as created from a superposition, after entanglement. Whereas a classical system is flipping a coin between two equal possibilities, a quantum system by rotation can increase their probability while in uncertainty until measured. For this reason a classical system performs better until there are more than two nodes, where it far surpasses through simultaneous decision making. The edge quantum has over classical games is essentially that multiple strategies can be considered simultaneously ([Dey]).
 
-\section{Conclusion}
-\begin{flushleft}
-It has been argued that quantum games have not added anything to the field of game theory, but it has certainly added another perspective and tool set, if not a paradigm shift. Furthermore it does not seem to be something which will lodge forever in the tower of intellect, but rather will make its presence known in the market place of both ideas and industry, as seen in the theoretical benefits of a quantum internet. The future of quantum computing could be to examine the evolution of the strategies and utility functions of the game in a network topology, different games in the topology, and how a system evolves dependence on another piece of the network. Issues that need to be addressed are error correction, decoherence, and where to send information when only local knowledge is available\cite{Dey}. There are still issues remaining especially in terms of even if it is still a piece of theory, a script written but not rehearsed, there cannot be any doubt that it will soon enter the stage at a turning point for the second act of computing's monologue. 
-\end{flushleft}
+<div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+  <figure style={{ flex: 1, marginRight: '1rem' }}>
+    <img src="/images/latency_cp.png" alt="Latency Comparison" style={{ width: '100%' }}/>
+    <figcaption>Latency Comparison ([Dey])</figcaption>
+  </figure>
+  <figure style={{ flex: 1 }}>
+    <img src="/images/fidelity_cp.png" alt="Fidelity Comparison" style={{ width: '100%' }}/>
+    <figcaption>Fidelity Comparison - Decoherence can be thought of as damping or depolarizing. ([Dey])</figcaption>
+  </figure>
+</div>
 
-\printbibliography
-\nocite{*}
-\section{Further Reading}
-Jiangfeng Du, Chenyong Ju, Hui Li. Quantum entanglement helps in improving economic
- efficiency. J. Phys. A: Math. \& Gen. 38, pp. 1559–1565 (2005).
-\section{Appendix 1 - Latency Analysis}
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\linewidth]{latency.png}
-    \caption{Seeking to minimize quantum operations for latency where cost is calculated with total latency over all links those nodes propagate on, from Scenario 1.\cite{Dey}}
-    \label{fig:enter-label}
-\end{figure}
-\end{document}
-$$
+## Conclusion
+
+It has been argued that quantum games have not added anything to the field of game theory, but it has certainly added another perspective and tool set, if not a paradigm shift. Furthermore it does not seem to be something which will lodge forever in the tower of intellect, but rather will make its presence known in the market place of both ideas and industry, as seen in the theoretical benefits of a quantum internet. The future of quantum computing could be to examine the evolution of the strategies and utility functions of the game in a network topology, different games in the topology, and how a system evolves dependence on another piece of the network. Issues that need to be addressed are error correction, decoherence, and where to send information when only local knowledge is available ([Dey]). There are still issues remaining especially in terms of even if it is still a piece of theory, a script written but not rehearsed, there cannot be any doubt that it will soon enter the stage at a turning point for the second act of computing's monologue. 
+
+## Further Reading
+
+Jiangfeng Du, Chenyong Ju, Hui Li. Quantum entanglement helps in improving economic efficiency. J. Phys. A: Math. & Gen. 38, pp. 1559–1565 (2005).
+
+## Appendix 1 - Latency Analysis
+
+<img src="/images/latency.png" alt="Seeking to minimize quantum operations for latency where cost is calculated with total latency over all links those nodes propagate on, from Scenario 1." style={{ width: '50%' }} />
+
+_Seeking to minimize quantum operations for latency where cost is calculated with total latency over all links those nodes propagate on, from Scenario 1. ([Dey])_
+
