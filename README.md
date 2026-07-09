@@ -12,7 +12,7 @@ This is a porfolio site template complete with a blog. Includes:
 - Geist font
 
 ###
-View here [https://www.micahbillington.com/](https://www.micahbillington.ca/)!
+View here [https://www.micahbillington.ca/](https://www.micahbillington.ca/)!
 
 ### Source(s)
 
